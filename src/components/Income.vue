@@ -63,6 +63,8 @@ export default {
       const pension = this.getPension()
       if (tax && pension) {
         return this.form.income - pension - tax
+      } else if (tax) {
+        return this.form.income - tax
       } else {
         return 0
       }
