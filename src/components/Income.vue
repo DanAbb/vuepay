@@ -23,14 +23,6 @@
         <el-button>Cancel</el-button>
       </el-form-item>
     </el-form>
-    <div>
-      <el-table :data="tableData" border style="width: 100%">
-        <el-table-column header-align="right" align="right" prop="heading" width="180"></el-table-column>
-        <el-table-column header-align="center" prop="year" label="Year" width="180"></el-table-column>
-        <el-table-column header-align="center" prop="month" label="Month" width="180"></el-table-column>
-        <el-table-column header-align="center" prop="week" label="Week"></el-table-column>
-      </el-table>
-    </div>
   </div>
 </template>
 
@@ -41,7 +33,7 @@ export default {
       labelPosition: 'left',
       form: {
         income: 0,
-        taxcode: '',
+        taxcode: '1100L',
         studentLoan: '',
         pension: 0
       }
@@ -108,41 +100,6 @@ export default {
     takeHomeWeek () {
       return (this.$store.getters.weekIncome - this.$store.getters.weekTax - this.$store.getters.weekNI - this.$store.getters.weekSL - this.$store.getters.weekPension).toFixed(2)
     }
-  },
-  computed: {
-    tableData () {
-      return [{
-        heading: 'Gross',
-        year: this.$store.getters.yearIncome,
-        month: this.$store.getters.monthIncome,
-        week: this.$store.getters.weekIncome
-      }, {
-        heading: 'Tax Payable',
-        year: this.$store.getters.yearTax,
-        month: this.$store.getters.monthTax,
-        week: this.$store.getters.weekTax
-      }, {
-        heading: 'NI Payable',
-        year: this.$store.getters.yearNI,
-        month: this.$store.getters.monthNI,
-        week: this.$store.getters.weekNI
-      }, {
-        heading: 'Student Loan Payable',
-        year: this.$store.getters.yearSL,
-        month: this.$store.getters.monthSL,
-        week: this.$store.getters.weekSL
-      }, {
-        heading: 'Pension',
-        year: this.$store.getters.yearPension,
-        month: this.$store.getters.monthPension,
-        week: this.$store.getters.weekPension
-      }, {
-        heading: 'Takehome',
-        year: this.takeHomeYear(),
-        month: this.takeHomeMonth(),
-        week: this.takeHomeWeek()
-      }]
-    }
   }
 }
 </script>
@@ -150,16 +107,9 @@ export default {
 <style scoped>
   .income {
     margin: 50px auto;
-    width: 800px;
   }
 
   .el-form {
-    width: 400px;
     margin: 0 auto;
-  }
-
-  .form-income {
-    display: block;
-    width: auto;
   }
 </style>
