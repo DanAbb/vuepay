@@ -11,7 +11,12 @@
         <el-radio-group v-model="form.studentLoan">
           <el-radio-button label="Plan 1"></el-radio-button>
           <el-radio-button label="Plan 2"></el-radio-button>
+          <el-radio-button label="None"></el-radio-button>
         </el-radio-group>
+      </el-form-item>
+      <el-form-item label="Pension">
+        <el-input-number v-model="form.pension" :min="0" :step="1"></el-input-number>
+        <h1 style="float:right">%</h1>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click.prevent="submitIncome">Submit</el-button>
@@ -37,7 +42,8 @@ export default {
       form: {
         income: 0,
         taxcode: '',
-        studentLoan: ''
+        studentLoan: '',
+        pension: 0
       }
     }
   },
@@ -45,12 +51,13 @@ export default {
     submitIncome () {
       this.$store.dispatch('submitIncome', {
         income: this.form.income,
-        tax: this.getTaxCode(),
+        tax: this.getTaxable(),
         NI: this.getNI(),
-        studentLoan: this.getLoanThreshold()
+        studentLoan: this.getLoanThreshold(),
+        pension: this.form.pension
       })
     },
-    getTaxCode () {
+    getTaxable () {
       const numberPattern = /\d+/g
       const tax = parseInt(this.form.taxcode.match(numberPattern)) * 10
       if (tax) {
@@ -80,18 +87,20 @@ export default {
     getLoanThreshold () {
       if (this.form.studentLoan === 'Plan 1') {
         return 17495
-      } else {
+      } else if (this.form.studentLoan === 'Plan 2') {
         return 21000
+      } else {
+        return 0
       }
     },
     takeHomeYear () {
-      return (this.$store.getters.yearIncome - this.$store.getters.yearTax - this.$store.getters.yearNI - this.$store.getters.yearSL).toFixed(2)
+      return (this.$store.getters.yearIncome - this.$store.getters.yearTax - this.$store.getters.yearNI - this.$store.getters.yearSL - this.$store.getters.yearPension).toFixed(2)
     },
     takeHomeMonth () {
-      return (this.$store.getters.monthIncome - this.$store.getters.monthTax - this.$store.getters.monthNI - this.$store.getters.monthSL).toFixed(2)
+      return (this.$store.getters.monthIncome - this.$store.getters.monthTax - this.$store.getters.monthNI - this.$store.getters.monthSL - this.$store.getters.monthPension).toFixed(2)
     },
     takeHomeWeek () {
-      return (this.$store.getters.weekIncome - this.$store.getters.weekTax - this.$store.getters.weekNI - this.$store.getters.weekSL).toFixed(2)
+      return (this.$store.getters.weekIncome - this.$store.getters.weekTax - this.$store.getters.weekNI - this.$store.getters.weekSL - this.$store.getters.weekPension).toFixed(2)
     }
   },
   computed: {
@@ -116,6 +125,11 @@ export default {
         year: this.$store.getters.yearSL,
         month: this.$store.getters.monthSL,
         week: this.$store.getters.weekSL
+      }, {
+        heading: 'Pension',
+        year: this.$store.getters.yearPension,
+        month: this.$store.getters.monthPension,
+        week: this.$store.getters.weekPension
       }, {
         heading: 'Takehome',
         year: this.takeHomeYear(),
