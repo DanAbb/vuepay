@@ -54,14 +54,15 @@ export default {
         tax: this.getTaxable(),
         NI: this.getNI(),
         studentLoan: this.getLoanThreshold(),
-        pension: this.form.pension
+        pension: this.getPension()
       })
     },
     getTaxable () {
       const numberPattern = /\d+/g
       const tax = parseInt(this.form.taxcode.match(numberPattern)) * 10
-      if (tax) {
-        return this.form.income - tax
+      const pension = this.getPension()
+      if (tax && pension) {
+        return this.form.income - pension - tax
       } else {
         return 0
       }
@@ -92,6 +93,9 @@ export default {
       } else {
         return 0
       }
+    },
+    getPension () {
+      return this.form.income * (this.form.pension / 100)
     },
     takeHomeYear () {
       return (this.$store.getters.yearIncome - this.$store.getters.yearTax - this.$store.getters.yearNI - this.$store.getters.yearSL - this.$store.getters.yearPension).toFixed(2)

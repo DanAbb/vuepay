@@ -80,13 +80,13 @@ const getters = {
     }
   },
   yearPension: state => {
-    return (state.income * (state.pension / 100)).toFixed(2)
+    return state.pension.toFixed(2)
   },
   monthPension: state => {
-    return ((state.income * (state.pension / 100)) / 12).toFixed(2)
+    return (state.pension / 12).toFixed(2)
   },
   weekPension: state => {
-    return ((state.income * (state.pension / 100)) / 52).toFixed(2)
+    return (state.pension / 52).toFixed(2)
   }
 }
 
