@@ -4,7 +4,6 @@
 
 ## TODO
 - Add pension
-- Add student loans
 - Calculate tax correctly
 - Add routing
 - Create budgeting app
