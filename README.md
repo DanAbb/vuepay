@@ -3,8 +3,6 @@
 > Learning Vue.js with vuex so decided to try and create a takehome pay calculator
 
 ## TODO
-- Add pension
-- Calculate tax correctly
 - Add routing
 - Create budgeting app
 
