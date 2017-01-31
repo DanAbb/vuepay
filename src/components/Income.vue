@@ -7,6 +7,12 @@
       <el-form-item label="Tax Code">
         <el-input v-model="form.taxcode"></el-input>
       </el-form-item>
+      <el-form-item label="Student Loan">
+        <el-radio-group v-model="form.studentLoan">
+          <el-radio-button label="Plan 1"></el-radio-button>
+          <el-radio-button label="Plan 2"></el-radio-button>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click.prevent="submitIncome">Submit</el-button>
         <el-button>Cancel</el-button>
@@ -30,7 +36,8 @@ export default {
       labelPosition: 'left',
       form: {
         income: 0,
-        taxcode: ''
+        taxcode: '',
+        studentLoan: ''
       }
     }
   },
@@ -39,7 +46,8 @@ export default {
       this.$store.dispatch('submitIncome', {
         income: this.form.income,
         tax: this.getTaxCode(),
-        NI: this.getNI()
+        NI: this.getNI(),
+        studentLoan: this.getLoanThreshold()
       })
     },
     getTaxCode () {
@@ -69,14 +77,21 @@ export default {
 
       return upperPayable + standardPayable
     },
+    getLoanThreshold () {
+      if (this.form.studentLoan === 'Plan 1') {
+        return 17495
+      } else {
+        return 21000
+      }
+    },
     takeHomeYear () {
-      return (this.$store.getters.yearIncome - this.$store.getters.yearTax - this.$store.getters.yearNI).toFixed(2)
+      return (this.$store.getters.yearIncome - this.$store.getters.yearTax - this.$store.getters.yearNI - this.$store.getters.yearSL).toFixed(2)
     },
     takeHomeMonth () {
-      return (this.$store.getters.monthIncome - this.$store.getters.monthTax - this.$store.getters.monthNI).toFixed(2)
+      return (this.$store.getters.monthIncome - this.$store.getters.monthTax - this.$store.getters.monthNI - this.$store.getters.monthSL).toFixed(2)
     },
     takeHomeWeek () {
-      return (this.$store.getters.weekIncome - this.$store.getters.weekTax - this.$store.getters.weekNI).toFixed(2)
+      return (this.$store.getters.weekIncome - this.$store.getters.weekTax - this.$store.getters.weekNI - this.$store.getters.weekSL).toFixed(2)
     }
   },
   computed: {
@@ -96,6 +111,11 @@ export default {
         year: this.$store.getters.yearNI,
         month: this.$store.getters.monthNI,
         week: this.$store.getters.weekNI
+      }, {
+        heading: 'Student Loan Payable',
+        year: this.$store.getters.yearSL,
+        month: this.$store.getters.monthSL,
+        week: this.$store.getters.weekSL
       }, {
         heading: 'Takehome',
         year: this.takeHomeYear(),

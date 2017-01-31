@@ -1,7 +1,8 @@
 const state = {
   income: 0,
   tax: 0,
-  NI: 0
+  NI: 0,
+  studentLoan: ''
 }
 
 const getters = {
@@ -43,6 +44,27 @@ const getters = {
   },
   weekNI: state => {
     return (state.NI / 52).toFixed(2)
+  },
+  yearSL: state => {
+    if (state.income > state.studentLoan) {
+      return ((state.income - state.studentLoan) * 0.09).toFixed(2)
+    } else {
+      return 0
+    }
+  },
+  monthSL: state => {
+    if (state.income > state.studentLoan) {
+      return (((state.income - state.studentLoan) * 0.09) / 12).toFixed(2)
+    } else {
+      return 0
+    }
+  },
+  weekSL: state => {
+    if (state.income > state.studentLoan) {
+      return (((state.income - state.studentLoan) * 0.09) / 52).toFixed(2)
+    } else {
+      return 0
+    }
   }
 }
 
@@ -51,6 +73,7 @@ const mutations = {
     state.income = payload.income
     state.tax = payload.tax
     state.NI = payload.NI
+    state.studentLoan = payload.studentLoan
   }
 }
 
