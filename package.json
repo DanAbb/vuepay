@@ -15,6 +15,7 @@
   "dependencies": {
     "element-ui": "^1.1.6",
     "vue": "^2.1.0",
+    "vue-router": "^2.2.0",
     "vuex": "^2.1.1",
     "whatwg-fetch": "^2.0.1"
   },
@@ -66,7 +67,7 @@
     "lolex": "^1.4.0",
     "mocha": "^3.1.0",
     "nightwatch": "^0.9.8",
-    "node-sass": "^4.2.0",
+    "node-sass": "^4.5.0",
     "opn": "^4.0.2",
     "ora": "^0.3.0",
     "phantomjs-prebuilt": "^2.1.3",

@@ -2,7 +2,7 @@
   <div class="income">
     <el-form ref="form" :model="form" label-width="120px" :label-position="labelPosition">
       <el-form-item label="Income">
-        <el-input-number class="form-income" v-model="form.income" :min="0" :step="100"></el-input-number>
+        <el-input-number class="form-income" v-model="form.income" :min="0" :step="1000"></el-input-number>
       </el-form-item>
       <el-form-item label="Tax Code">
         <el-input v-model="form.taxcode"></el-input>
@@ -15,8 +15,9 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="Pension">
-        <el-input-number v-model="form.pension" :min="0" :step="1"></el-input-number>
-        <h1 style="float:right">%</h1>
+        <el-input class="pension" v-model="form.pension">
+          <template slot="append">%</template>
+        </el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click.prevent="submitIncome">Submit</el-button>
@@ -48,6 +49,7 @@ export default {
         studentLoan: this.getLoanThreshold(),
         pension: this.getPension()
       })
+      this.$router.push('display')
     },
     getTaxable () {
       const numberPattern = /\d+/g
@@ -104,12 +106,27 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  $primary: #20A0FF;
+  $secondary: #324157;
+  $tertiary: #dfe6ec;
+  $tertiary-light: #EEF1F6;
+
   .income {
     margin: 50px auto;
+    background: $tertiary-light;
+    padding: 30px;
+    border: 2px solid $secondary;
+    border-radius: 15px;
+    box-shadow: 2px 2px 10px $tertiary;
+  }
+
+  .pension {
+    width: 50%;
   }
 
   .el-form {
     margin: 0 auto;
+    max-width: 400px;
   }
 </style>

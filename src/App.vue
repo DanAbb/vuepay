@@ -2,10 +2,12 @@
 <template>
   <div id="app">
     <sprite></sprite>
-    <income></income>
-    <income-Display></income-Display>
-    <debts></debts>
-    <!-- <outgoings></outgoings> -->
+    <nav-menu></nav-menu>
+    <div class="container">
+      <router-view></router-view>
+      <debts></debts>
+      <!-- <outgoings></outgoings> -->
+    </div>
   </div>
 </template>
 
@@ -14,6 +16,8 @@ import Sprite from './components/Sprite'
 import Income from './components/Income'
 import IncomeDisplay from './components/IncomeDisplay'
 import Debts from './components/Debts'
+import MapImg from './components/map'
+import NavMenu from './components/navMenu'
 // import Outgoings from './components/Outgoings'
 
 export default {
@@ -22,7 +26,9 @@ export default {
     Income,
     IncomeDisplay,
     Sprite,
-    Debts
+    Debts,
+    MapImg,
+    NavMenu
     // Outgoings
   }
 }
@@ -33,6 +39,9 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
   text-align: center;
   color: #2c3e50;
   margin: 50px;

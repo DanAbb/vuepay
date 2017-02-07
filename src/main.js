@@ -6,13 +6,22 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import locale from 'element-ui/lib/locale/lang/en'
 import store from './store'
+import VueRouter from 'vue-router'
+import { routes } from './routes'
 
 Vue.use(ElementUI, { locale })
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+  routes,
+  mode: 'history'
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   store,
+  router,
   template: '<App/>',
   components: { App }
 })
